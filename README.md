@@ -7,9 +7,20 @@
 		const WebpackDevServerOutput = require('webpack-dev-server-output');
 
 		new WebpackDevServerOutput({
-    		path: 'output-path'
+    		path: 'output-path',
+    		isDel: true | false
 		});
 
 
-path: default is output.path
+path: Specify file output directory(<font color="red">full path</font>) (指定文件产出目录)
+ 		
+ 		[default '/output'] 
+ 		Output folder for the current project root directory（项目根目录下的output文件夹）
+
+isDel: is del  the directory specified by "path" （是否删除产出目录）
+	
+	[default: false]
+
+ 
+
 

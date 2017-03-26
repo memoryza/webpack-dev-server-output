@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/memoryza/webpack-dev-server-output#readme",
   "devDependencies": {
+    "mkdirp": "^0.5.1",
     "rimraf": "^2.6.1"
   }
 }
