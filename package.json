@@ -1,0 +1,23 @@
+{
+  "name": "webpack-dev-server-output",
+  "version": "0.0.1",
+  "description": "webpack-dev-server generate output file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memoryza/webpack-dev-server-output.git"
+  },
+  "keywords": [
+    "webpack-dev-server",
+    "generate-output-file"
+  ],
+  "author": "memoryza (jincai.wang@foxmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/memoryza/webpack-dev-server-output/issues"
+  },
+  "homepage": "https://github.com/memoryza/webpack-dev-server-output#readme"
+}
