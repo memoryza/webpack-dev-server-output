@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/memoryza/webpack-dev-server-output/issues"
   },
-  "homepage": "https://github.com/memoryza/webpack-dev-server-output#readme"
+  "homepage": "https://github.com/memoryza/webpack-dev-server-output#readme",
+  "devDependencies": {
+    "rimraf": "^2.6.1"
+  }
 }
