@@ -17,7 +17,7 @@ path: Specify file output directory(<font color="red">full path</font>) (指定�
  		[default '/output'] 
  		Output folder for the current project root directory（项目根目录下的output文件夹）
 
-isDel: is del  the directory specified by "path" （是否删除产出目录）
+isDel: Update related old files （更新改动相关的旧文件，删除旧文件）
 	
 	[default: false]
 

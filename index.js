@@ -9,6 +9,23 @@ const fs = require('fs');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 let params = {};
+let sourceMap = {}; // 存放编译过的文件，以便于部分删除（why?webpack 每次只对更新相关的文件产出，如果暴力删除文件夹，没有变更的文件则被删除了)
+let isFirstBuild = true; // 是否是第一次编译
+function getFilename(name) {
+    let nameArr = name.split(path.sep);
+    if (nameArr.length === 1) {
+        nameArr = name.split('/');
+    }
+    let nameTail = name.split('.');
+    let prefix = nameTail[nameTail.length - 1];
+    let filename = '';
+    if (nameArr.length > 1) {
+        filename = prefix + '_' + nameArr[nameArr.length - 1].split('.')[0];
+    } else {
+        filename = prefix + '_' + nameArr[0].split('.')[0];
+    }
+    return filename;
+}
 function WebpackDevServerOutput(options) {
     params = options;
 }
@@ -17,7 +34,20 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
       let outputPath = params.path || path.join(path.resolve("."), 'output');
       if (params.isDel === true) {
           if (fs.existsSync(outputPath)) {
-              rimraf.sync(outputPath);
+              // 删除历史文件
+              if (isFirstBuild) {
+                  isFirstBuild = false;
+                  rimraf.sync(outputPath);
+              } else {
+                  for (let filename in compilation.assets) {
+                      let cacheFile = sourceMap[getFilename(filename)];
+                      if (cacheFile) {
+                          cacheFile = cacheFile.replace('/', path.sep);
+                          let delFile = path.join(outputPath, cacheFile);
+                          fs.unlink(delFile);
+                      }
+                  }
+              }
           }
            mkdirp.sync(outputPath)
       } else {
@@ -26,7 +56,12 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
           }
       }
       for (let filename in compilation.assets) {
+          // 如果要清理历史文件，则分析
+          if (params.isDel) {
+              sourceMap[getFilename(filename)] = filename;
+          }
           let fileArr = filename.split(path.sep);
+          //windows sep \\ but webpack can set /
           if (fileArr.length === 1) {
               fileArr = filename.split('/');
           }
@@ -40,4 +75,3 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
   });
 };
 module.exports = WebpackDevServerOutput;
-
