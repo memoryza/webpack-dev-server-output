@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev-server-output",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "webpack-dev-server generate output file",
   "main": "index.js",
   "scripts": {

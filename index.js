@@ -18,8 +18,8 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
       if (params.isDel === true) {
           if (fs.existsSync(outputPath)) {
               rimraf.sync(outputPath);
-              fs.mkdirSync(outputPath);
           }
+           mkdirp.sync(outputPath)
       } else {
           if (!fs.existsSync(outputPath)) {
               fs.mkdirSync(outputPath);
@@ -27,6 +27,9 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
       }
       for (let filename in compilation.assets) {
           let fileArr = filename.split(path.sep);
+          if (fileArr.length === 1) {
+              fileArr = filename.split('/');
+          }
           if (fileArr.length > 1) {
               let privatePath = fileArr.slice(0, fileArr.length - 1).join(path.sep);
               mkdirp.sync(path.join(outputPath, privatePath));
@@ -37,3 +40,4 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
   });
 };
 module.exports = WebpackDevServerOutput;
+
