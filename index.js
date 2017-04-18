@@ -44,7 +44,13 @@ WebpackDevServerOutput.prototype.apply = function(compiler) {
                       if (cacheFile) {
                           cacheFile = cacheFile.replace('/', path.sep);
                           let delFile = path.join(outputPath, cacheFile);
-                          fs.unlink(delFile);
+                          if (fs.existsSync(delFile)) {
+                              try {
+                                  fs.unlink(delFile);
+                              } catch(e) {
+                                  console.log(e);
+                              }
+                          }
                       }
                   }
               }
